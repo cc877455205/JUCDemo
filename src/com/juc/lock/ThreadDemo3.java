@@ -1,4 +1,4 @@
-package com.atguigu.lock;
+package com.juc.lock;
 
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;

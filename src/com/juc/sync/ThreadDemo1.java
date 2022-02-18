@@ -1,65 +1,43 @@
-package com.atguigu.lock;
-
-import java.util.concurrent.locks.Condition;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
+package com.juc.sync;
 
 /**
  *
- * @Description: 通过Lock接口线程间通信
- * @Date:Create：in 2022/2/11 14:35
+ * @Description: Synchronized实现线程间通信
+ * @Date:Create：in 2022/2/10 15:08
  */
 //第一步 创建资源类，定义属性和操作方法
 class Share {
     //初始值
     private int number = 0;
-    //创建Lock
-    private Lock lock = new ReentrantLock();
-    private Condition condition = lock.newCondition();
 
     //+1的方法
-    public void incr() throws InterruptedException {
-        //上锁
-        lock.lock();
-
-        try {
-            //判断
-            while (number != 0) {
-                condition.await();
-            }
-            // 干活
-            number++;
-            System.out.println(Thread.currentThread().getName() + " :: " + number);
-            // 通知
-            condition.signalAll();
-        } finally {
-            //解锁
-            lock.unlock();
+    public synchronized void incr() throws InterruptedException {
+        //第二步 判断 干活 通知
+        while (number != 0) {//判断number值是否是0，如果不是0等待
+            this.wait();
         }
+        //如果number是0，就+1操作
+        number++;
+        System.out.println(Thread.currentThread().getName() + " :: " + number);
+        //通知其他线程
+        this.notifyAll();
     }
 
     //-1的方法
-    public void decr() throws InterruptedException {
-
-        lock.lock();
-        try {
-            //判断
-            while (number != 1) {
-                condition.await();
-            }
-            // 干活
-            number--;
-            System.out.println(Thread.currentThread().getName() + " :: " + number);
-            // 通知
-            condition.signalAll();
-        } finally {
-            //解锁
-            lock.unlock();
+    public synchronized void decr() throws InterruptedException {
+        //第二步 判断 干活 通知
+        while (number != 1) {//判断number值是否是0，如果不是0等待
+            this.wait();
         }
+        //如果number是0，就-1操作
+        number--;
+        System.out.println(Thread.currentThread().getName() + " :: " + number);
+        //通知其他线程
+        this.notifyAll();
     }
 }
 
-public class ThreadDemo2 {
+public class ThreadDemo1 {
     //第三步 创建多个线程，调用资源类的方法
     public static void main(String[] args) {
         Share share = new Share();
@@ -83,7 +61,6 @@ public class ThreadDemo2 {
                 }
             }
         }, "BB").start();
-
         new Thread(() -> {
             for (int i = 0; i <= 10; i++) {
                 try {

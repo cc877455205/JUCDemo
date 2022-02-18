@@ -1,4 +1,4 @@
-package com.atguigu.juc;
+package com.juc.juc;
 
 import java.util.concurrent.CountDownLatch;
 

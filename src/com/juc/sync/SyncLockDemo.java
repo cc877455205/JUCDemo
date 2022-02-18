@@ -1,4 +1,4 @@
-package com.atguigu.sync;
+package com.juc.sync;
 
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
