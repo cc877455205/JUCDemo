@@ -40,15 +40,15 @@ public class BlockingQueueDemo {
 //        System.out.println(blockingQueue.poll());
 
         //第三组
-        blockingQueue.put("a");
-        blockingQueue.put("b");
-        blockingQueue.put("c");
-        blockingQueue.put("w");
-
-        System.out.println(blockingQueue.take());
-        System.out.println(blockingQueue.take());
-        System.out.println(blockingQueue.take());
-        System.out.println(blockingQueue.take());
+//        blockingQueue.put("a");
+//        blockingQueue.put("b");
+//        blockingQueue.put("c");
+//        blockingQueue.put("w");
+//
+//        System.out.println(blockingQueue.take());
+//        System.out.println(blockingQueue.take());
+//        System.out.println(blockingQueue.take());
+//        System.out.println(blockingQueue.take());
 
         //第四组
         System.out.println(blockingQueue.offer("a"));
